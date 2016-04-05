@@ -1,3 +1,3 @@
 # tdd-carfuel
 
-A car Fuel system.
+A car fuel system.
