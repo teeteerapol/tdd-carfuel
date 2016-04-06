@@ -28,13 +28,18 @@ namespace CarFuel.Services
 
         public Car AddCar(Car car, Guid userId)
         {
+            if (!CanAddMoreCars(userId))
+            {
+                throw new OverQuotaException("Cannot add more car.");
+            }
+
             car.OwnerId = userId;
             return CarDb.Add(car);
         }
 
         public Boolean CanAddMoreCars(Guid userId)
         {
-            throw new NotImplementedException();
+            return (GetCarsByMember(userId).Count() < 2);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace CarFuel.Controllers
     {
         //private static List<Car> cars = new List<Car>();
         private ICarDb db;
-        private CarService carService ;
+        private CarService carService;
 
         public CarsController()
         {
@@ -40,7 +40,14 @@ namespace CarFuel.Controllers
         {
             //cars.Add(item);
             var userId = new Guid(User.Identity.GetUserId());
-            carService.AddCar(item, userId);
+            try
+            {
+                carService.AddCar(item, userId);
+            }
+            catch (OverQuotaException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
             return RedirectToAction("Index");
         }
     }
