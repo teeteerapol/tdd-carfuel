@@ -26,7 +26,7 @@ namespace CarFuel.Facts
                 c.Make.ShouldEqual("Honda");
                 c.Model.ShouldEqual("City");
                 c.ListFillup.ShouldNotBeNull();
-                c.ListFillup.Count.ShouldEqual(0);
+                c.ListFillup.Count.ShouldEqual(5);
             }
         }
 
