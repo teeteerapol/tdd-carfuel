@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Should;
 using Xunit;
 using CarFuel.Model;
+using CNX.Shared;
 
 namespace CarFuel.Facts
 {
@@ -32,6 +33,18 @@ namespace CarFuel.Facts
 
         public class AddFillupMethods
         {
+            [Fact]
+            public void NewFillup_HasCurrentDateTime()
+            {
+                var c = new Car();
+                var now = DateTime.Now;
+
+                SystemTime.SetDateTime(now);
+                Fillup f = c.AddFillUp(1000, 40m);
+
+                f.Date.ShouldEqual(now);
+            }
+
             [Fact]
             public void SingleFillup()
             {

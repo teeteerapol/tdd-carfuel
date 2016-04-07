@@ -32,5 +32,6 @@ namespace CarFuel.Model
         public int Odometer { get; set; }
         public Fillup NextFillup { get; set;}
         public int Id { get; set; }
+        public DateTime Date { get; set; }
     }
 }

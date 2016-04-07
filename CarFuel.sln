@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarFuel.Services", "CarFuel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarFuel.DataAccess", "CarFuel.DataAccess\CarFuel.DataAccess.csproj", "{53E7CD08-7760-4095-AA6A-9E7DAF25D9AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNX.Shared", "CNX.Shared\CNX.Shared.csproj", "{6EE429F1-74FD-4704-8979-D9CB3B7EBD89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{53E7CD08-7760-4095-AA6A-9E7DAF25D9AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53E7CD08-7760-4095-AA6A-9E7DAF25D9AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53E7CD08-7760-4095-AA6A-9E7DAF25D9AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EE429F1-74FD-4704-8979-D9CB3B7EBD89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EE429F1-74FD-4704-8979-D9CB3B7EBD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EE429F1-74FD-4704-8979-D9CB3B7EBD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EE429F1-74FD-4704-8979-D9CB3B7EBD89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

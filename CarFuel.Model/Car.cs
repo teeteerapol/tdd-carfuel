@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CNX.Shared;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -40,6 +41,7 @@ namespace CarFuel.Model
         public Fillup AddFillUp(int odometer, decimal liters)
         {
             Fillup f = new Fillup(odometer, liters);
+            f.Date = SystemTime.Now();
 
             if (this.ListFillup.Count > 0)
             {
