@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using CarFuel.DataAccess;
+using System.Net;
 
 namespace CarFuel.Controllers
 {
@@ -14,13 +15,13 @@ namespace CarFuel.Controllers
     public class CarsController : Controller
     {
         //private static List<Car> cars = new List<Car>();
-        private ICarDb db;
-        private CarService carService;
+        //private ICarDb db;
+        private readonly ICarService carService;
 
-        public CarsController()
+        public CarsController(ICarService carService)
         {
-            db = new CarDb();
-            carService = new CarService(db);
+            //db = new CarDb();
+            this.carService = carService;
         }
 
         public ActionResult Index()
@@ -51,8 +52,13 @@ namespace CarFuel.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(Guid id)
+        public ActionResult Details(Guid? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var userId = new Guid(User.Identity.GetUserId());
             var c = carService.GetCarsByMember(userId).SingleOrDefault(x => x.Id == id);
             return View(c);
