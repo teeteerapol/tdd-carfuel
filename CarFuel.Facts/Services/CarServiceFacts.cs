@@ -9,15 +9,18 @@ using Xunit;
 using Should;
 using CarFuel.DataAccess;
 using Xunit.Abstractions;
+using Moq;
 
 namespace CarFuel.Facts.Services
 {
     public class SharedService
     {
         public CarService CarService { get; set; }
+        public FakeCarDb Db { get; set; }
         public SharedService()
         {
-            CarService = new CarService(new FakeCarDb());
+            Db = new FakeCarDb();
+            CarService = new CarService(Db);
         }
     }
 
@@ -31,6 +34,7 @@ namespace CarFuel.Facts.Services
         {
             //private ICarDb Db;
             private CarService Service;
+            public FakeCarDb Db { get; set; }
             private ITestOutputHelper Output;
 
             public AddCarMethods(ITestOutputHelper output, SharedService s)
@@ -38,6 +42,7 @@ namespace CarFuel.Facts.Services
                 //Db = new FakeCarDb();
                 //Service = new CarService(Db);
                 Service = s.CarService;
+                Db = s.Db;
                 this.Output = output;
 
                 this.Output.WriteLine("ctor");
@@ -52,15 +57,42 @@ namespace CarFuel.Facts.Services
                 c.Model = "Civic";
                 var userId = Guid.NewGuid();
 
+                Db.AddMethodHasCalled = false;
+
                 var c2 = Service.AddCar(c, userId);
 
                 c2.ShouldNotBeNull();
                 c2.Make.ShouldEqual(c.Make);
                 c2.Model.ShouldEqual(c.Model);
 
-                var n = Service.GetCarsByMember(userId);
-                n.Count().ShouldEqual(1);
-                Assert.Contains(n, x => x.OwnerId == userId);
+                Db.AddMethodHasCalled.ShouldBeTrue();
+
+                //var n = Service.GetCarsByMember(userId);
+                //n.Count().ShouldEqual(1);
+                //Assert.Contains(n, x => x.OwnerId == userId);
+            }
+
+            [Fact]
+            public void AddSingleCarMoq()
+            {
+                var mock = new Mock<ICarDb>();
+
+                mock.Setup(db => db.Add(It.IsAny<Car>()))
+                    .Returns((Car car) => car);
+
+                var service = new CarService(mock.Object);
+
+                var c = new Car();
+                c.Make = "Honda";
+                c.Model = "Civic";
+                var userId = Guid.NewGuid();
+
+                var c2 = service.AddCar(c, userId);
+
+                c2.ShouldNotBeNull();
+                c2.Make.ShouldEqual(c.Make);
+                c2.Model.ShouldEqual(c.Model);
+                mock.Verify(db => db.Add(It.IsAny<Car>()), Times.Once);
             }
 
             [Fact]
